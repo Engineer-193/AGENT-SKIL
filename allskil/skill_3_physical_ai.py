@@ -149,7 +149,8 @@ def nurec_check_prereqs() -> str:
     checks: list[str] = ["🔍 *NuRec Prerequisites Check*\n"]
 
     code, out = _run("docker --version 2>/dev/null || echo NOT_FOUND", timeout=10)
-    checks.append(f"• Docker: {'✅ ' + out.split('\\n')[0][:60] if 'NOT_FOUND' not in out else '❌ Tidak ditemukan'}")
+    docker_ver = out.split('\n')[0][:60]
+    checks.append(f"• Docker: {'✅ ' + docker_ver if 'NOT_FOUND' not in out else '❌ Tidak ditemukan'}")
 
     code, out = _run("nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -2 || echo NOT_FOUND", timeout=10)
     if "NOT_FOUND" in out or not out.strip():
