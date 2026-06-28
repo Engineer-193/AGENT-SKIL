@@ -1,5 +1,7 @@
 import logging
 import json
+import time
+import traceback
 from telegram import Update, Chat
 from telegram.ext import (
     Application,
@@ -8,7 +10,8 @@ from telegram.ext import (
     ContextTypes,
     filters,
 )
-from telegram.constants import ParseMode, ChatAction
+from telegram.constants import ChatAction
+from telegram.error import TelegramError
 
 from config import (
     TELEGRAM_BOT_TOKEN,
@@ -187,10 +190,21 @@ def main() -> None:
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
     )
+    app.add_error_handler(error_handler)
 
     logger.info("✅ Bot siap! Menunggu pesan...")
     app.run_polling(drop_pending_updates=True)
 
 
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+    logger.error("Exception saat handle update:", exc_info=context.error)
+
+
 if __name__ == "__main__":
-    main()
+    RESTART_DELAY = 5
+    while True:
+        try:
+            main()
+        except Exception:
+            logger.error("Bot crash! Restart dalam %ds...\n%s", RESTART_DELAY, traceback.format_exc())
+            time.sleep(RESTART_DELAY)
