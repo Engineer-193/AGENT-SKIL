@@ -6,9 +6,17 @@ import glob
 import re
 from typing import Any
 from config import WORK_DIR, MAX_OUTPUT_LENGTH, COMMAND_TIMEOUT
+
 from allskil.skill_1_aiq_deploy import AIQ_TOOL_DEFINITIONS, AIQ_TOOL_FUNCTIONS
 from allskil.skill_2_session_memory import SESSION_TOOL_DEFINITIONS, SESSION_TOOL_FUNCTIONS
 from allskil.skill_3_physical_ai import NUREC_TOOL_DEFINITIONS, NUREC_TOOL_FUNCTIONS
+from allskil.skill_4_nim_deploy import TOOLS as NIM_TOOLS, TOOL_HANDLERS as NIM_HANDLERS
+from allskil.skill_5_nemo_guardrails import TOOLS as GUARDRAILS_TOOLS, TOOL_HANDLERS as GUARDRAILS_HANDLERS
+from allskil.skill_6_cosmos import TOOLS as COSMOS_TOOLS, TOOL_HANDLERS as COSMOS_HANDLERS
+from allskil.skill_7_morpheus import TOOLS as MORPHEUS_TOOLS, TOOL_HANDLERS as MORPHEUS_HANDLERS
+from allskil.skill_8_riva import TOOLS as RIVA_TOOLS, TOOL_HANDLERS as RIVA_HANDLERS
+from allskil.skill_9_omniverse import TOOLS as OMNIVERSE_TOOLS, TOOL_HANDLERS as OMNIVERSE_HANDLERS
+from allskil.skill_10_bionemo import TOOLS as BIONEMO_TOOLS, TOOL_HANDLERS as BIONEMO_HANDLERS
 
 os.makedirs(WORK_DIR, exist_ok=True)
 
@@ -116,6 +124,13 @@ TOOL_DEFINITIONS = [
     *AIQ_TOOL_DEFINITIONS,
     *SESSION_TOOL_DEFINITIONS,
     *NUREC_TOOL_DEFINITIONS,
+    *NIM_TOOLS,
+    *GUARDRAILS_TOOLS,
+    *COSMOS_TOOLS,
+    *MORPHEUS_TOOLS,
+    *RIVA_TOOLS,
+    *OMNIVERSE_TOOLS,
+    *BIONEMO_TOOLS,
 ]
 
 TOOL_FUNCTIONS: dict[str, Any] = {
@@ -123,4 +138,11 @@ TOOL_FUNCTIONS: dict[str, Any] = {
     **AIQ_TOOL_FUNCTIONS,
     **SESSION_TOOL_FUNCTIONS,
     **NUREC_TOOL_FUNCTIONS,
+    **NIM_HANDLERS,
+    **GUARDRAILS_HANDLERS,
+    **COSMOS_HANDLERS,
+    **MORPHEUS_HANDLERS,
+    **RIVA_HANDLERS,
+    **OMNIVERSE_HANDLERS,
+    **BIONEMO_HANDLERS,
 }
