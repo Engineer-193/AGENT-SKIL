@@ -5,8 +5,8 @@ load_dotenv()
 
 TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
 OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-OPENAI_BASE_URL: str = os.getenv("OPENAI_BASE_URL", "https://api.deepseek.com/v1")
-MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-chat")
+OPENAI_BASE_URL: str = os.getenv("OPENAI_BASE_URL", "https://integrate.api.nvidia.com/v1")
+MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-ai/deepseek-r1-0528")
 
 ALLOWED_USER_IDS: list[int] = [
     int(uid.strip())
