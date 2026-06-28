@@ -244,7 +244,7 @@ def bionemo_embeddings(sequences: list, model: str, output_format: str = "numpy"
         f"embeddings = encoder.encode(sequences)  # shape: (N, seq_len, hidden_dim)\n\n"
         f"# Mean pool over sequence length\nrepresentations = embeddings.mean(dim=1)  # (N, hidden_dim)\n"
         f"print(f'Embedding shape: {{representations.shape}}')\n\n"
-        f"{'np.save(\"embeddings.npy\", representations.numpy())' if output_format == 'numpy' else 'torch.save(representations, \"embeddings.pt\")'}\n```"
+        f"{('np.save(embeddings.npy, representations.numpy())' if output_format == 'numpy' else 'torch.save(representations, embeddings.pt)')}\n```"
     )
 
 
