@@ -8,6 +8,7 @@ import re
 from typing import Any
 from config import WORK_DIR, MAX_OUTPUT_LENGTH, COMMAND_TIMEOUT
 from skill_1_aiq_deploy import AIQ_TOOL_DEFINITIONS, AIQ_TOOL_FUNCTIONS
+from skill_2_session_memory import SESSION_TOOL_DEFINITIONS, SESSION_TOOL_FUNCTIONS
 
 os.makedirs(WORK_DIR, exist_ok=True)
 
@@ -191,6 +192,7 @@ TOOL_FUNCTIONS = {
     "terminal": terminal,
     "execute_code": execute_code,
     **AIQ_TOOL_FUNCTIONS,
+    **SESSION_TOOL_FUNCTIONS,
 }
 
-TOOL_DEFINITIONS = [*TOOL_DEFINITIONS, *AIQ_TOOL_DEFINITIONS]
+TOOL_DEFINITIONS = [*TOOL_DEFINITIONS, *AIQ_TOOL_DEFINITIONS, *SESSION_TOOL_DEFINITIONS]
