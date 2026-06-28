@@ -139,14 +139,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
 
-    status_msg = await update.message.reply_text("⏳ Sedang berpikir...")
-
-    async def status_callback(text: str) -> None:
-        try:
-            await status_msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
-        except Exception:
-            pass
-
     history = conversation_manager.get(chat_id)
 
     try:
@@ -154,21 +146,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             user_message=user_text,
             chat_id=chat_id,
             history=history,
-            status_callback=status_callback,
         )
 
         conversation_manager.append(chat_id, "user", user_text)
         conversation_manager.append(chat_id, "assistant", result)
 
-        await status_msg.delete()
-
-        chunks = _split_message(result)
-        for chunk in chunks:
-            await update.message.reply_text(chunk, parse_mode=ParseMode.MARKDOWN)
+        if result:
+            chunks = _split_message(result)
+            for chunk in chunks:
+                await context.bot.send_message(chat_id=chat_id, text=chunk)
 
     except Exception as e:
         logger.error(f"Error handle_message: {e}", exc_info=True)
-        await status_msg.edit_text(f"❌ Terjadi error: {e}")
+        await context.bot.send_message(chat_id=chat_id, text="Terjadi error. Coba lagi.")
 
 
 def _split_message(text: str, max_len: int = 4000) -> list[str]:
